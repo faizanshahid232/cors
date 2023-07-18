@@ -1,7 +1,6 @@
 {
   "name": "cors-server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "start": "node index.js",
   "scripts": {
@@ -14,5 +13,15 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "stripe": "^12.12.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faizanshahid232/cors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/faizanshahid232/cors/issues"
+  },
+  "homepage": "https://github.com/faizanshahid232/cors#readme",
+  "description": ""
 }
