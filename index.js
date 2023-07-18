@@ -41,6 +41,10 @@ const calculateOrderAmount = (items) => {
       console.log("here1", items);
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Access-Control-Allow-Origin": "*"
+        },
       amount: calculateOrderAmount(items),
       currency: "usd",
       automatic_payment_methods: {
