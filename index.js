@@ -13,7 +13,7 @@ app.use(express.json());
 const stripe = require("stripe")('sk_test_51NOz1fIi4beyPjru1XAPSAdxY1x8zH8fJMOghajQGbgq2SVgE3R2tLTj8fhoZ8kCJHq7wX0PKgstks4S6NUBwRYA006SNgD679');
 
 var whitelist = [
-    'http://localhost:3000',
+    'https://payment-ten-sooty.vercel.app/',
 ];
 var corsOptions = {
     origin: function(origin, callback){
@@ -36,7 +36,7 @@ const calculateOrderAmount = (items) => {
   };
   
   app.post("/create-payment-intent", async (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     const { items } = req.body;
       console.log("here1", items);
     // Create a PaymentIntent with the order amount and currency
@@ -55,7 +55,7 @@ const calculateOrderAmount = (items) => {
   });
   
 app.post('/cors-post', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     const url = 'https://carboncompensate.climatepositive.com/api/v1/calculate';
     fetch(url, {
         method: "POST",
@@ -74,7 +74,7 @@ app.post('/cors-post', (req, res) => {
 })
 
 app.post('/cors-post-email', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     console.log(req.body);
     const url = 'https://carboncompensate.climatepositive.com/api/v1/vend';
     fetch(url, {
@@ -93,7 +93,7 @@ app.post('/cors-post-email', (req, res) => {
     
 })
 app.get('/cors', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     
     const url = 'https://carboncompensate.starcb.com/api/v1';
     fetch(url, {
