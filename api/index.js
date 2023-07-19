@@ -32,7 +32,7 @@ const allowCors = fn => async (req, res) => {
     res.end(d.toString())
   }
   
-  module.exports = allowCors(handler)
+  
   
 module.exports = [
     'strapi::errors',
@@ -162,5 +162,5 @@ app.get('/cors', (req, res) => {
     })
     
 })
-
+module.exports = allowCors(handler);
 module.exports = app;
