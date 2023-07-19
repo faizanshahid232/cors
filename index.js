@@ -10,6 +10,26 @@ app.listen(process.env.PORT || 3000);
 app.use(express.static('public'))
 app.use(express.json());
 
+module.exports = [
+    'strapi::errors',
+    'strapi::security',
+    'strapi::poweredBy',
+    {
+      name: 'strapi::cors',
+      config: {
+        enabled: true,
+        headers: '*',
+        origin: ['https://payment-ten-sooty.vercel.app/']
+      }
+    },
+    'strapi::logger',
+    'strapi::query',
+    'strapi::body',
+    'strapi::session',
+    'strapi::favicon',
+    'strapi::public',
+];
+
 const stripe = require("stripe")('sk_test_51NOz1fIi4beyPjru1XAPSAdxY1x8zH8fJMOghajQGbgq2SVgE3R2tLTj8fhoZ8kCJHq7wX0PKgstks4S6NUBwRYA006SNgD679');
 
 var whitelist = [
@@ -36,7 +56,7 @@ const calculateOrderAmount = (items) => {
   };
   
   app.post("/create-payment-intent", async (req, res) => {
-    //res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     const { items } = req.body;
       console.log("here1", items);
     // Create a PaymentIntent with the order amount and currency
