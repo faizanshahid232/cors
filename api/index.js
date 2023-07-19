@@ -80,6 +80,7 @@ const calculateOrderAmount = (items) => {
   };
   
   app.post("/payment/create", async (req, res) => {
+
     res.set('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -101,7 +102,7 @@ const calculateOrderAmount = (items) => {
       },
     });
     console.log("Payment:", paymentIntent.client_secret);
-    res.json({
+    res.status(200).json({
       clientSecret: paymentIntent.client_secret,
       
     });
