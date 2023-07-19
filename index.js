@@ -7,13 +7,57 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
 app.listen(process.env.PORT || 3000);
-app.use(express.static("public"));
+app.use(express.static('public'))
 app.use(express.json());
+
+const allowCors = fn => async (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+    if (req.method === 'OPTIONS') {
+      res.status(200).end()
+      return
+    }
+    return await fn(req, res)
+  }
+  
+  const handler = (req, res) => {
+    const d = new Date()
+    res.end(d.toString())
+  }
+  
+  module.exports = allowCors(handler)
+  
+module.exports = [
+    'strapi::errors',
+    'strapi::security',
+    'strapi::poweredBy',
+    {
+      name: 'strapi::cors',
+      config: {
+        enabled: true,
+        headers: '*',
+        origin: ['https://payment-ten-sooty.vercel.app/']
+      }
+    },
+    'strapi::logger',
+    'strapi::query',
+    'strapi::body',
+    'strapi::session',
+    'strapi::favicon',
+    'strapi::public',
+];
 
 const stripe = require("stripe")('sk_test_51NOz1fIi4beyPjru1XAPSAdxY1x8zH8fJMOghajQGbgq2SVgE3R2tLTj8fhoZ8kCJHq7wX0PKgstks4S6NUBwRYA006SNgD679');
 
 var whitelist = [
-    'http://localhost:3000',
+    'https://payment-ten-sooty.vercel.app/',
 ];
 var corsOptions = {
     origin: function(origin, callback){
@@ -35,8 +79,17 @@ const calculateOrderAmount = (items) => {
     return items;
   };
   
-  app.post("/create-payment-intent", async (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  app.post("/payment/create", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
     const { items } = req.body;
       console.log("here1", items);
     // Create a PaymentIntent with the order amount and currency
@@ -48,14 +101,14 @@ const calculateOrderAmount = (items) => {
       },
     });
     console.log("Payment:", paymentIntent.client_secret);
-    res.send({
+    res.json({
       clientSecret: paymentIntent.client_secret,
       
     });
   });
   
 app.post('/cors-post', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     const url = 'https://carboncompensate.climatepositive.com/api/v1/calculate';
     fetch(url, {
         method: "POST",
@@ -74,7 +127,7 @@ app.post('/cors-post', (req, res) => {
 })
 
 app.post('/cors-post-email', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     console.log(req.body);
     const url = 'https://carboncompensate.climatepositive.com/api/v1/vend';
     fetch(url, {
@@ -93,7 +146,7 @@ app.post('/cors-post-email', (req, res) => {
     
 })
 app.get('/cors', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Origin', 'https://payment-ten-sooty.vercel.app/');
     
     const url = 'https://carboncompensate.starcb.com/api/v1';
     fetch(url, {
@@ -107,6 +160,6 @@ app.get('/cors', (req, res) => {
         res.send('This has CORS enabled 🎈'+ data)
     })
     
-});
+})
 
 module.exports = app;
