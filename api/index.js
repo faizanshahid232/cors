@@ -79,7 +79,7 @@ const calculateOrderAmount = (items) => {
     return items;
   };
   
-  app.post("/payment/create", async (req, res) => {
+  app.post("/create-payment-intent", async (req, res) => {
 
     res.set('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', true);
