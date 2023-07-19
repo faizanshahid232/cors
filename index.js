@@ -13,6 +13,18 @@ app.use(express.json());
 
 const stripe = require("stripe")('sk_test_51NOz1fIi4beyPjru1XAPSAdxY1x8zH8fJMOghajQGbgq2SVgE3R2tLTj8fhoZ8kCJHq7wX0PKgstks4S6NUBwRYA006SNgD679');
 
+var whitelist = [
+  'https://payment-ten-sooty.vercel.app/',
+];
+var corsOptions = {
+  origin: function(origin, callback){
+      var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+      callback(null, originIsWhitelisted);
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 const calculateOrderAmount = (items) => {
   // Replace this constant with a calculation of the order's amount
   // Calculate the order total on the server to prevent
