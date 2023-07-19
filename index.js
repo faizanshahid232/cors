@@ -1,7 +1,7 @@
 const express = require('express');
 var cors = require('cors')
 const app = express();
-const bodyParser = require('body-parser');
+/*const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
@@ -162,4 +162,8 @@ app.get('/cors', (req, res) => {
     
 })
 
+module.exports = app;*/
+app.get('/', (req, res) => {
+  res.send('Welcome to CORS server 😁')
+});
 module.exports = app;
