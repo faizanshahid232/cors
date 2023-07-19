@@ -8,7 +8,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 var whitelist = [
-    'http://localhost:3000',
+    '*',
 ];
 var corsOptions = {
     origin: function(origin, callback){
@@ -27,7 +27,7 @@ const calculateOrderAmount = (items) => {
 };
 
 app.post("/create-payment-intent", async (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.set('Access-Control-Allow-Origin', '*');
   const { items } = req.body;
     console.log("here1", items);
   // Create a PaymentIntent with the order amount and currency
